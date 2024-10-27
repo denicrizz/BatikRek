@@ -5,30 +5,41 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+// Warna tema terang
+private val LightColors = lightColorScheme(
+    primary = Color(0xFF8B4513), // Cokelat khas batik
+    secondary = Color(0xFFD4A24F), // Warna kuning emas untuk sentuhan hangat
+    background = Color.White,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = Color.Black,
+)
+
+// Warna tema gelap
+private val DarkColors = darkColorScheme(
+    primary = Color(0xFF8B4513),
+    secondary = Color(0xFFD4A24F),
+    background = Color.Black,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onBackground = Color.White,
+)
+
+// Fungsi tema utama untuk mengatur tampilan sesuai dengan preferensi tema (gelap atau terang)
 @Composable
 fun BatikrekTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) {
-        darkColorScheme(
-            primary = Color(0xFF8B4513),
-            secondary = Color(0xFFD4A24F),
-            background = Color(0xFF303030),
-            surface = Color.Black
-        )
+        DarkColors
     } else {
-        lightColorScheme(
-            primary = Color(0xFF8B4513),
-            secondary = Color(0xFFD4A24F),
-            background = Color(0xFFFFF3E0),
-            surface = Color.White
-        )
+        LightColors
     }
 
     MaterialTheme(
         colorScheme = colors,
-        typography = Typography,
+        typography = Typography, // Atur tipografi sesuai keinginan
         content = content
     )
 }

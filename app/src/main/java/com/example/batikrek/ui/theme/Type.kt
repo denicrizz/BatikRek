@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set typography Anda di sini
+
 val Typography = Typography(
     // Atur style font yang diinginkan, misalnya:
     bodyLarge = TextStyle(

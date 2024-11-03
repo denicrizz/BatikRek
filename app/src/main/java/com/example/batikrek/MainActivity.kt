@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.material3.*
@@ -19,8 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,7 +70,7 @@ fun MainScreen() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.logo_batikrek), // Ganti dengan ikon aplikasi Anda
+                    painter = painterResource(id = R.drawable.logo_batikrek),
                     contentDescription = "App Icon",
                     modifier = Modifier
                         .size(70.dp)
@@ -152,11 +151,11 @@ fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
             icon = {
                 Icon(
                     Icons.Default.Home,
-                    contentDescription = "Home",
+                    contentDescription = "Beranda",
                     modifier = Modifier.size(24.dp)
                 )
             },
-            label = { Text("Home") },
+            label = { Text("Beranda") },
             selected = selectedTab == 0,
             onClick = { onTabSelected(0) },
             colors = NavigationBarItemDefaults.colors(
@@ -170,11 +169,11 @@ fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
             icon = {
                 Icon(
                     Icons.Default.List,
-                    contentDescription = "Search",
+                    contentDescription = "Katalog",
                     modifier = Modifier.size(24.dp)
                 )
             },
-            label = { Text("Search") },
+            label = { Text("katalog") },
             selected = selectedTab == 1,
             onClick = { onTabSelected(1) },
             colors = NavigationBarItemDefaults.colors(
@@ -187,12 +186,12 @@ fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
         NavigationBarItem(
             icon = {
                 Icon(
-                    Icons.Default.Person,
-                    contentDescription = "Settings",
+                    Icons.Default.ThumbUp,
+                    contentDescription = "Rekomendasi",
                     modifier = Modifier.size(24.dp)
                 )
             },
-            label = { Text("Settings") },
+            label = { Text("Rekomendasi") },
             selected = selectedTab == 2,
             onClick = { onTabSelected(2) },
             colors = NavigationBarItemDefaults.colors(
@@ -202,6 +201,25 @@ fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
                 unselectedTextColor = Color.White // Warna abu-abu untuk teks tab yang tidak dipilih
             )
         )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    Icons.Default.Person,
+                    contentDescription = "Profil",
+                    modifier = Modifier.size(24.dp)
+                )
+            },
+            label = { Text("Profil") },
+            selected = selectedTab == 2,
+            onClick = { onTabSelected(2) },
+            colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = Color.Black, // Warna hitam untuk ikon tab yang dipilih
+                unselectedIconColor = Color.Black, // Warna abu-abu untuk ikon tab yang tidak dipilih
+                selectedTextColor = Color.White, // Warna hitam untuk teks tab yang dipilih
+                unselectedTextColor = Color.White // Warna abu-abu untuk teks tab yang tidak dipilih
+            )
+        )
+
     }
 }
 
@@ -210,7 +228,7 @@ fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
 fun BatikCatalog(batikList: List<Batik>) {
     Column(modifier = Modifier.padding(16.dp)) {
         Text(
-            text = "Katalog Batik",
+            text = "Batik Populer",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -285,7 +303,7 @@ fun BatikItem(batik: Batik) {
 
 
 
-// Implementasi fungsi rekomendasi
+// prototype fungsi rekomendasi
 fun getRecommendationForEvent(event: String): String {
     return when (event) {
         "Pernikahan" -> "Untuk acara pernikahan, kami merekomendasikan batik dengan motif klasik seperti Sidoasih atau Sidomukti yang melambangkan kebahagiaan dan kemakmuran."
@@ -305,6 +323,3 @@ fun PreviewMainActivity() {
         MainScreen()
     }
 }
-
-
-

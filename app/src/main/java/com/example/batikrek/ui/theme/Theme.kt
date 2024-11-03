@@ -7,8 +7,8 @@ import androidx.compose.ui.graphics.Color
 
 // Warna tema terang
 private val LightColors = lightColorScheme(
-    primary = Color(0xFF8B4513), // Cokelat khas batik
-    secondary = Color(0xFFD4A24F), // Warna kuning emas untuk sentuhan hangat
+    primary = Color(0xFF8B4513),
+    secondary = Color(0xFFD4A24F),
     background = Color.White,
     onPrimary = Color.White,
     onSecondary = Color.Black,

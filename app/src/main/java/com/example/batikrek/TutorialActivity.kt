@@ -44,18 +44,17 @@ class TutorialActivity : ComponentActivity() {
 fun TutorialScreen() {
     val context = LocalContext.current
     val pagerState = rememberPagerState(pageCount = { 3 })
-    val scope = rememberCoroutineScope()
 
-    // Automate sliding to next page
+
     LaunchedEffect(pagerState.currentPage) {
         while (true) {
-            delay(3000) // Set delay for automatic slide (3 seconds)
+            delay(3000)
             val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
             pagerState.animateScrollToPage(nextPage)
         }
     }
 
-    // List of tutorial screens (text, image)
+
     val tutorialItems = listOf(
         TutorialPage(
             title = "Selamat Datang di BatikRek",
@@ -129,7 +128,7 @@ fun TutorialScreen() {
             )
         }
 
-        // Page indicator (optional)
+
         Row(
             Modifier
                 .height(50.dp)

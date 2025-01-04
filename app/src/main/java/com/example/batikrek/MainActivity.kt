@@ -29,197 +29,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.example.batikrek.data.Batik
 import com.example.batikrek.data.Batik.Companion.batikData
+import com.example.batikrek.route.NavRoute
 import com.example.batikrek.ui.theme.BatikrekTheme
 
 class MainActivity : ComponentActivity() {
+    @ExperimentalMaterial3Api
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BatikrekTheme {
-                MainScreen()
+            BatikrekTheme(darkTheme = false) {
+                val navController = rememberNavController()
+                NavRoute(navController = navController)
+//                MainScreen()
             }
         }
-    }
-}
-@Composable
-fun MainScreen() {
-    var selectedTab by remember { mutableStateOf(0) }
-    var selectedEvent by remember { mutableStateOf("") }
-    var recommendation by remember { mutableStateOf("") }
-    val events = listOf("Pernikahan", "Acara Formal", "Pesta", "Casual", "Acara Keluarga")
-
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(selectedTab) { selectedTab = it }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
-            // Header dengan ikon dan judul
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo_batikrek),
-                    contentDescription = "App Icon",
-                    modifier = Modifier
-                        .size(70.dp)
-                )
-                Text(
-                    text = "BatikRek",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            // Bagian katalog batik
-            BatikCatalog(batikData)
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Pilihan Event atau Acara
-            Text(text = "Pilih Jenis Acara", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-            Spacer(modifier = Modifier.height(8.dp))
-
-            var expanded by remember { mutableStateOf(false) }
-
-            Box {
-                OutlinedButton(onClick = { expanded = !expanded }) {
-                    Text(text = if (selectedEvent.isNotEmpty()) selectedEvent else "Pilih Acara")
-                }
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    events.forEach { event ->
-                        DropdownMenuItem(
-                            text = { Text(text = event) },
-                            onClick = {
-                                selectedEvent = event
-                                expanded = false
-                            }
-                        )
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Tombol Rekomendasi
-            Button(
-                onClick = {
-                    recommendation = getRecommendationForEvent(selectedEvent)
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "Dapatkan Rekomendasi")
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Bagian Rekomendasi
-            if (recommendation.isNotEmpty()) {
-                Text(
-                    text = "Rekomendasi Pakaian Batik untuk $selectedEvent:",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = recommendation, fontSize = 16.sp)
-            }
-        }
-    }
-}
-
-@Composable
-fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
-    NavigationBar(
-        containerColor = Color(0xFF8B4513), // Background warna gelap
-        tonalElevation = 8.dp
-    ) {
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    Icons.Default.Home,
-                    contentDescription = "Beranda",
-                    modifier = Modifier.size(24.dp)
-                )
-            },
-            label = { Text("Beranda") },
-            selected = selectedTab == 0,
-            onClick = { onTabSelected(0) },
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = Color.Black, // Warna hitam untuk ikon tab yang dipilih
-                unselectedIconColor = Color.Black, // Warna abu-abu untuk ikon tab yang tidak dipilih
-                selectedTextColor = Color.White, // Warna hitam untuk teks tab yang dipilih
-                unselectedTextColor = Color.White // Warna abu-abu untuk teks tab yang tidak dipilih
-            )
-        )
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    Icons.Default.List,
-                    contentDescription = "Katalog",
-                    modifier = Modifier.size(24.dp)
-                )
-            },
-            label = { Text("katalog") },
-            selected = selectedTab == 1,
-            onClick = { onTabSelected(1) },
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = Color.Black, // Warna hitam untuk ikon tab yang dipilih
-                unselectedIconColor = Color.Black, // Warna abu-abu untuk ikon tab yang tidak dipilih
-                selectedTextColor = Color.White, // Warna hitam untuk teks tab yang dipilih
-                unselectedTextColor = Color.White // Warna abu-abu untuk teks tab yang tidak dipilih
-            )
-        )
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    Icons.Default.ThumbUp,
-                    contentDescription = "Rekomendasi",
-                    modifier = Modifier.size(24.dp)
-                )
-            },
-            label = { Text("Rekomendasi") },
-            selected = selectedTab == 2,
-            onClick = { onTabSelected(2) },
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = Color.Black, // Warna hitam untuk ikon tab yang dipilih
-                unselectedIconColor = Color.Black, // Warna abu-abu untuk ikon tab yang tidak dipilih
-                selectedTextColor = Color.White, // Warna hitam untuk teks tab yang dipilih
-                unselectedTextColor = Color.White // Warna abu-abu untuk teks tab yang tidak dipilih
-            )
-        )
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    Icons.Default.Person,
-                    contentDescription = "Profil",
-                    modifier = Modifier.size(24.dp)
-                )
-            },
-            label = { Text("Profil") },
-            selected = selectedTab == 2,
-            onClick = { onTabSelected(2) },
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = Color.Black, // Warna hitam untuk ikon tab yang dipilih
-                unselectedIconColor = Color.Black, // Warna abu-abu untuk ikon tab yang tidak dipilih
-                selectedTextColor = Color.White, // Warna hitam untuk teks tab yang dipilih
-                unselectedTextColor = Color.White // Warna abu-abu untuk teks tab yang tidak dipilih
-            )
-        )
-
     }
 }
 
@@ -289,7 +115,7 @@ fun BatikItem(batik: Batik) {
             )
             // Spacer agar jarak tetap terjaga
             Spacer(modifier = Modifier.height(4.dp))
-            // Kategori Penggunaan dengan warna oranye
+
             Text(
                 text = "Cocok untuk: ${batik.suitableFor}",
                 fontSize = 12.sp,
@@ -316,10 +142,10 @@ fun getRecommendationForEvent(event: String): String {
 }
 
 
-@Preview(showBackground = true, device = "id:pixel_5")
-@Composable
-fun PreviewMainActivity() {
-    BatikrekTheme {
-        MainScreen()
-    }
-}
+//@Preview(showBackground = true, device = "id:pixel_5")
+//@Composable
+//fun PreviewMainActivity() {
+//    BatikrekTheme {
+//        MainScreen()
+//    }
+//}

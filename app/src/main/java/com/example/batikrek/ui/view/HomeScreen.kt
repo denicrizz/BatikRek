@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -17,15 +18,11 @@ import com.example.batikrek.BatikCatalog
 import com.example.batikrek.data.Batik.Companion.batikData
 import com.example.batikrek.R
 import com.example.batikrek.components.LayoutScreen
-import com.example.batikrek.getRecommendationForEvent
+
 
 @ExperimentalMaterial3Api
 @Composable
 fun HomeScreen(navController: NavController) {
-    var selectedTab by remember { mutableStateOf(0) }
-    var selectedEvent by remember { mutableStateOf("") }
-    var recommendation by remember { mutableStateOf("") }
-    val events = listOf("Pernikahan", "Acara Formal", "Pesta", "Casual", "Acara Keluarga")
 
     LayoutScreen(navController = navController) {
 
@@ -46,3 +43,4 @@ fun HomeScreen(navController: NavController) {
         }
     }
 }
+

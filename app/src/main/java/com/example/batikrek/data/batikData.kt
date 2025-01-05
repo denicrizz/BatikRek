@@ -2,6 +2,20 @@ package com.example.batikrek.data
 
 import com.example.batikrek.R
 
+data class BatikRequest(
+    val suitable_for: String
+)
+
+data class BatikResponse(
+    val recommended_batik: List<RecommendedBatik>
+)
+
+data class RecommendedBatik(
+    val description: String,
+    val name: String,
+    val suitable_for: List<String>
+)
+
 data class Batik(
     val name: String,
     val motif: String,

@@ -50,6 +50,8 @@ class MainActivity : ComponentActivity() {
 }
 
 
+
+
 @Composable
 fun BatikCatalog(batikList: List<Batik>) {
     Column(modifier = Modifier.padding(16.dp)) {
@@ -129,17 +131,8 @@ fun BatikItem(batik: Batik) {
 
 
 
-// prototype fungsi rekomendasi
-fun getRecommendationForEvent(event: String): String {
-    return when (event) {
-        "Pernikahan" -> "Untuk acara pernikahan, kami merekomendasikan batik dengan motif klasik seperti Sidoasih atau Sidomukti yang melambangkan kebahagiaan dan kemakmuran."
-        "Acara Formal" -> "Untuk acara formal, batik dengan motif geometris atau Kawung sangat cocok. Pilih warna yang tidak terlalu mencolok."
-        "Pesta" -> "Untuk pesta, Anda bisa memilih batik dengan motif modern dan warna-warna cerah. Motif Mega Mendung atau Parang bisa menjadi pilihan yang bagus."
-        "Casual" -> "Untuk acara casual, batik kontemporer dengan motif sederhana dan warna-warna natural sangat cocok. Motif Truntum atau Sekar Jagad bisa menjadi pilihan."
-        "Acara Keluarga" -> "Untuk acara keluarga, batik dengan motif tradisional seperti Sogan atau Ceplok sangat pas. Pilih warna yang hangat dan nyaman."
-        else -> "Silakan pilih jenis acara terlebih dahulu untuk mendapatkan rekomendasi."
-    }
-}
+
+
 
 
 //@Preview(showBackground = true, device = "id:pixel_5")
